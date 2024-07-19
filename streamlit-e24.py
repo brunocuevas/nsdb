@@ -78,10 +78,10 @@ def convert_query_terms(x):
     """
     if x[:6] == 'taxid:':
         return "SELECT * FROM ref WHERE taxond_id == '{0}'".format(x[6:])
-
+    elif x[:5] == 'nsdb-':
+        return "SELECT * FROM ref WHERE id == '{0}'".format(x)
     else:
-
-        return "SELECT * FROM ref WHERE (scientific_name LIKE '%{0}%' or lineage LIKE '%{0}%')".format(x)
+        return "SELECT * FROM ref WHERE (scientific_name ILIKE '%{0}%' or lineage ILIKE '%{0}%')".format(x)
     
     
 
@@ -148,7 +148,7 @@ with st.container():
 
     st.header('Search')
     col1, col2 = st.columns(2)
-    query_terms = col1.text_input('Nif, Azotobacter vinelandii, taxid:1076')
+    query_terms = col1.text_input('vinelandii, taxid:1076, bacterium, Anc_794, nsdb-000006')
     with col2:
         st.write('Nitrogenase type')
         subcol1, subcol2 = st.columns(2)
