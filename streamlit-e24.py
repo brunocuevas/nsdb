@@ -132,7 +132,7 @@ col1.title('Nitrogenase Structure DB')
 col1.text("""
 
 Nitrogenases are fundamental for our biosphere, as they 
-carry  out the only mechanism to fix molecular nitrogen 
+carry  out the only biological mechanism to fix molecular nitrogen 
 into bioavailable nitrogen. However, despite their 
 importance, there is little coverage of their structural 
 diversity. In this database, we attempt to explore 
@@ -255,7 +255,7 @@ with st.container():
 """
 If you like this work, cite us:
 
-    Garcia, Cuevas, Kaçar, 2023, Journal of Nitrogenases
+    [TBA]
 
 """
 
