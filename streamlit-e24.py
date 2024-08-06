@@ -10,6 +10,7 @@ import os
 import pathlib
 import boto3
 import io
+import os.path
 st.set_page_config(layout="wide")
 
 
@@ -29,6 +30,29 @@ def download_protein_s3(id):
     # path_to_pdb = pathlib.Path(os.getcwd()).parent / 'structures/pdb/{0}.pdb'.format(id)
     f.seek(0)
     return f.read().decode('utf-8')
+
+
+def download_reference_data():
+    if not os.path.isfile('reference.csv'):
+        with open('reference.csv', 'wb') as g:
+            s3.Bucket('nsdb').download_fileobj(f'reference.csv', g)
+        
+    if not os.path.isfile('chain-reference.csv'):
+        with open('chain-reference.csv', 'wb') as g:
+            s3.Bucket('nsdb').download_fileobj(f'chain-reference.csv', g)
+        
+        
+    if not os.path.isfile('phylogenetic-relationships.csv'):
+        with open('phylogenetic-relationships.csv', 'wb') as g:
+            s3.Bucket('nsdb').download_fileobj(f'phylogenetic-relationships.csv', g)
+        
+        
+    if not os.path.isfile('AGNifAlign103.asr.tre'):
+        with open('AGNifAlign103.asr.tre', 'wb') as g:
+            s3.Bucket('nsdb').download_fileobj(f'AGNifAlign103.asr.tre', g)
+        
+    
+
 
 @st.cache_resource
 def open_database():
@@ -65,7 +89,7 @@ def find_phylogenetic_relatives(selection):
     return df[['type', 'y']].rename(columns=dict(y='relative'))
 
 
-
+download_reference_data()
 open_database()
 st.session_state['tree'] = open_tree()
 
