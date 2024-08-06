@@ -175,6 +175,13 @@ dataset_includes = [
 
 if query_terms != '':
     st.header('Results')
+
+    st.write(
+        "Gold entries had their MSA built from scratch."
+        "Silver entries were built by realigning the main variant (map)"
+        "MSA against another variant (e.g. alt2)."
+    )
+
     sql_query = convert_query_terms(query_terms)
     results_df = query(sql_query)[['id', 'nitrogenase_type', 'scientific_name', 'variant', 'status',  'stochiometry', 'lineage']]
 
@@ -207,7 +214,7 @@ if selected:
 
     pdb_text = download_protein_s3(selection['id'])
 
-    st.download_button(label='download pdb', data=pdb_text, file_name='selected.pdb')
+    st.download_button(label='download pdb', data=pdb_text, file_name=selection['id'] + '.pdb')
 
     col1, col2 = st.columns(2)
     with col1:
